@@ -1,0 +1,31 @@
+<?php
+
+$database_name = 'dvkm';
+				$connect = mysqli_connect('localhost', 'root',  '', $database_name) or die("Unable to connect");
+				
+
+if(isset($_POST['signup-btn'])) {
+
+      $username = $_POST['user-name'];
+      $email = $_POST['user-email'];
+      $password = $_POST['user-pass'];
+
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    try {
+      $SQLInsert = "INSERT INTO userDVKM (userName, userPass, userEmail)
+                   VALUES ($username, $password, $email)";
+
+      mysqli_query($connect, $SQLInsert);
+
+      if(mysqli_num_rows($SQLInsert) >= 1) {
+        header('location: Index.html');
+      }
+    }
+    catch (PDOException $e) {
+      echo "Error: " . $e->getMessage();
+    }
+
+}
+
+?>

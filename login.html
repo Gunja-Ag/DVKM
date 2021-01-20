@@ -1,0 +1,33 @@
+<?php
+
+require_once 'session.php';
+
+if(isset($_POST['login-btn'])) {
+
+    $user = $_POST['user-name'];
+    $password = $_POST['user-pass'];
+
+    try {
+      $s = " select * from userDVKM where userName = '$user' && userPass = '$password'";
+				$result = mysqli_query($connect, $s);
+
+				$num = mysqli_num_rows($result);
+
+        if($num == 1) {
+          
+          $_SESSION['userName'] = $username;
+		  
+          header('location: Index.html');
+        }
+        else {
+          echo "Error: Invalid username or password";
+        }
+      }
+    
+    catch (PDOException $e) {
+      echo "Error: " . $e->getMessage();
+    }
+
+}
+
+?>
